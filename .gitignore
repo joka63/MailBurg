@@ -16,3 +16,8 @@ build/
 dist/
 *.deb
 *.AppImage
+
+# IDEs
+.idea
+# direnv/nix-direnv: lokaler Cache der Devshell, maschinenspezifisch
+.direnv/
