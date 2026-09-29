@@ -23,6 +23,7 @@ pythonPackages.buildPythonApplication rec {
   nativeBuildInputs = [
     pkgs.makeWrapper
     pkgs.wrapGAppsHook3
+    pkgs.qt6.qtbase
     pkgs.qt6.wrapQtAppsHook
     pythonPackages.setuptools
     pythonPackages.wheel
