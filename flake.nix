@@ -34,6 +34,10 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
+        mailburg = import ./nix/mailburg.nix {
+          inherit pkgs;
+          lib = pkgs.lib;
+        };
 
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [
           # oberflaeche
@@ -85,6 +89,12 @@
         '';
       in
       {
+        packages.default = mailburg;
+        apps.default = {
+          type = "app";
+          program = "${mailburg}/bin/mailburg-gui";
+        };
+
         devShells.default = pkgs.mkShell {
           packages = [
             pythonEnv
