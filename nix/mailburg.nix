@@ -59,7 +59,7 @@ pythonPackages.buildPythonApplication rec {
     install -Dm644 ${src}/assets/icon.svg \
       "$out/share/icons/hicolor/scalable/apps/mailburg.svg"
 
-    cat > "$out/share/applications/de.stephanlefty.MailBurg.desktop" <<EOF
+    cat > mailburg.desktop <<EOF
     [Desktop Entry]
     Type=Application
     Name=MailBurg
@@ -72,6 +72,9 @@ pythonPackages.buildPythonApplication rec {
     Keywords=Mail;E-Mail;Archiv;Suche;IMAP;
     StartupNotify=true
     EOF
+
+    install -Dm644 mailburg.desktop \
+      "$out/share/applications/de.stephanlefty.MailBurg.desktop"
   '';
 
   meta = with lib; {
