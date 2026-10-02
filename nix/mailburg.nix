@@ -29,7 +29,7 @@ pythonPackages.buildPythonApplication rec {
       desktopName = "MailBurg";
       exec = "mailburg-gui";
       icon = "mailburg";           # Icon-Name (in $out/share/icons/...)
-      categories = [ "Office;Email" ];
+      categories = [ "Office" "Email" ];
       comment = "E-Mails sammeln, aufbewahren und durchsuchen";
     })
   ];
