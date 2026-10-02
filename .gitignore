@@ -21,3 +21,6 @@ dist/
 .idea
 # direnv/nix-direnv: lokaler Cache der Devshell, maschinenspezifisch
 .direnv/
+
+# Nix: jeder Nutzer erzeugt seine eigene flake.lock
+flake.lock
