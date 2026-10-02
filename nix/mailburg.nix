@@ -2,6 +2,8 @@
 , lib ? pkgs.lib
 , src ? lib.cleanSource ../.
 , version ? "unstable"
+, makeDesktopItem ? pkgs.makeDesktopItem
+, copyDesktopItems ? pkgs.copyDesktopItems
 }:
 
 let
@@ -20,6 +22,18 @@ pythonPackages.buildPythonApplication rec {
   inherit version src;
   format = "pyproject";
 
+    # --- Desktop-Entry ---
+  desktopItems = [
+    (makeDesktopItem {
+      name = "de.stefanlefty.MailBurg";
+      desktopName = "MailBurg";
+      exec = "mailburg-gui";
+      icon = "mailburg";           # Icon-Name (in $out/share/icons/...)
+      categories = [ "Office;Email" ];
+      comment = "E-Mails sammeln, aufbewahren und durchsuchen";
+    })
+  ];
+
   nativeBuildInputs = [
     pkgs.makeWrapper
     pkgs.wrapGAppsHook3
@@ -27,6 +41,7 @@ pythonPackages.buildPythonApplication rec {
     pkgs.qt6.wrapQtAppsHook
     pythonPackages.setuptools
     pythonPackages.wheel
+    copyDesktopItems
   ];
 
   propagatedBuildInputs = with pythonPackages; [
@@ -58,23 +73,6 @@ pythonPackages.buildPythonApplication rec {
   postInstall = ''
     install -Dm644 ${src}/assets/icon.svg \
       "$out/share/icons/hicolor/scalable/apps/mailburg.svg"
-
-    cat > mailburg.desktop <<EOF
-    [Desktop Entry]
-    Type=Application
-    Name=MailBurg
-    GenericName=E-Mail-Archiv
-    Comment=E-Mails sammeln, aufbewahren und durchsuchen
-    Exec=${placeholder "out"}/bin/mailburg-gui %f
-    Icon=mailburg
-    Terminal=false
-    Categories=Office;Email;
-    Keywords=Mail;E-Mail;Archiv;Suche;IMAP;
-    StartupNotify=true
-    EOF
-
-    install -Dm644 mailburg.desktop \
-      "$out/share/applications/de.stephanlefty.MailBurg.desktop"
   '';
 
   meta = with lib; {
