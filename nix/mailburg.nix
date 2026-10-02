@@ -81,8 +81,9 @@ pythonPackages.buildPythonApplication rec {
     # Qt sucht beim Portal nach .desktop Dateien; XDG_DATA_DIRS muss auf
     # den Store-Pfad zeigen, sonst erscheint die Warnung
     # "Could not register app ID: App info not found".
-    sed -i "1s|^|export XDG_DATA_DIRS=\"$out/share:${pkgs.hicolor-icon-theme}/share:\$XDG_DATA_DIRS\"\n|" \
-      "$out/bin/mailburg-gui"
+    ${pkgs.lib.getExe pkgs.makeWrapper} "$out/bin/mailburg-gui" "$out/bin/mailburg-gui.wrapped" \
+      --prefix XDG_DATA_DIRS : "$out/share:${pkgs.hicolor-icon-theme}/share"
+    mv "$out/bin/mailburg-gui.wrapped" "$out/bin/mailburg-gui"
   '';
 
   meta = with lib; {
