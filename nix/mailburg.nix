@@ -77,6 +77,14 @@ pythonPackages.buildPythonApplication rec {
       "$out/share/applications/de.stephanlefty.MailBurg.desktop"
   '';
 
+  postFixup = ''
+    # Qt sucht beim Portal nach .desktop Dateien; XDG_DATA_DIRS muss auf
+    # den Store-Pfad zeigen, sonst erscheint die Warnung
+    # "Could not register app ID: App info not found".
+    sed -i "1s|^|export XDG_DATA_DIRS=\"$out/share:${pkgs.hicolor-icon-theme}/share:\$XDG_DATA_DIRS\"\n|" \
+      "$out/bin/mailburg-gui"
+  '';
+
   meta = with lib; {
     description = "Archiv für E-Mail, an einem Ort Ihrer Wahl";
     homepage = "https://github.com/Stephan-Lefty/MailBurg";

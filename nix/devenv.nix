@@ -39,6 +39,11 @@ let
   '';
 
   mailburgGui = pkgs.writeShellScriptBin "mailburg-gui" ''
+    # Qt sucht beim Portal nach der .desktop Datei; im Store liegt sie unter
+    # /nix/store/.../share/applications/. Damit das Portal sie findet, muss
+    # XDG_DATA_DIRS mitgesetzt werden - sonst erscheint die Warnung
+    # "Could not register app ID: App info not found for 'de.stephanlefty.MailBurg'".
+    export XDG_DATA_DIRS="${pkgs.hicolor-icon-theme}/share:''${XDG_DATA_DIRS:-}"
     exec ${pythonEnv}/bin/python3 -m mailburg.ui.app "$@"
   '';
 
