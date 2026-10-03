@@ -18,9 +18,12 @@ dist/
 *.AppImage
 
 # IDEs
-.idea
-# direnv/nix-direnv: lokaler Cache der Devshell, maschinenspezifisch
+.idea/
+.vscode/
+
+# Für Nix Entwicklungsumgebungen
+## direnv/nix-direnv: lokaler Cache der Devshell, maschinenspezifisch
 .direnv/
 
-# Nix: jeder Nutzer erzeugt seine eigene flake.lock
+## Jeder Nutzer erzeugt seine eigene flake.lock
 flake.lock
