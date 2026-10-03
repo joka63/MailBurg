@@ -31,6 +31,9 @@ pythonPackages.buildPythonApplication rec {
       icon = "mailburg";           # Icon-Name (in $out/share/icons/...)
       categories = [ "Office" "Email" ];
       comment = "E-Mails sammeln, aufbewahren und durchsuchen";
+      keywords = [ "Mail" "E-Mail" "Archiv" "Suche" "IMAP" ];
+      terminal = false;
+      startupNotify = true;
     })
   ];
 
