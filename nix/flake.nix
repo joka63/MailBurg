@@ -34,8 +34,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        devenv = import ./nix/devenv.nix { inherit pkgs; };
-        mailburg = import ./nix/mailburg.nix {
+        devenv = import ./devenv.nix { inherit pkgs; };
+        mailburg = import ./mailburg.nix {
           inherit pkgs;
           lib = pkgs.lib;
         };

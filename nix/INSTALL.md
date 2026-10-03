@@ -1,4 +1,4 @@
-<!-- Vor dem Merge github:joka63/MailBurg/nix ersetzen durch github:Stefan-Lefty/MailBurg --> 
+<!-- Vor dem Merge github:joka63/MailBurg/nix2 ersetzen durch github:Stefan-Lefty/MailBurg --> 
 
 # Installation (NixOS)
 
@@ -26,19 +26,19 @@ Hierfür folgendes in `/etc/nixos/configuration.nix` eintragen:
 Folgendes Kommando startet den Download aller benötigten Pakete und dann die MailBurg-GUI, ohne sie dauerhaft zu installieren. 
 
 ```bash
-nix run github:joka63/MailBurg/nix
+nix run github:joka63/Mailburg/nix2?dir=nix
 ```
 
 Nach dem Beenden der GUI liegen die Pakete noch im Nix-Store (`/nix/store`), 
 können aber nicht mehr direkt aufgerufen werden. Sie bleiben im Nix-Store, 
-so dass der nächste Aufruf von `nix run github:joka63/MailBurg/nix` schneller ist.
+so dass der nächste Aufruf von `nix run github:joka63/Mailburg/nix2?dir=nix` schneller ist.
 Die nächste Nix-Garbage-Collection löscht die Pakete wieder aus dem Nix-Store,
 
 
 ### Paket dauerhaft ins Profil installieren
 
 ```bash
-nix profile install github:joka63/MailBurg/nix
+nix profile install github:joka63/Mailburg/nix2?dir=nix
 ```
 
 Danach stehen die Kommandos `mailburg` und `mailburg-gui` im Profil des aufrufenden Nutzers zur Verfügung.
@@ -53,7 +53,7 @@ In eine NixOS-Flake übernehmen (`environment.systemPackages`)
 
 ```nix
 {
-  inputs.mailburg.url = "github:joka63/MailBurg/nix";
+  inputs.mailburg.url = "github:joka63/Mailburg/nix2?dir=nix";
 
   outputs = { self, nixpkgs, mailburg, ... }:
   let
@@ -89,7 +89,7 @@ direnv allow # optional, falls direnv installiert ist
 Folgendes Kommando baut das MailBurg-Paket mit GUI und dem Kommandozeilen-Tool.
 
 ```bash
-nix-build
+nix-build ./nix
 ```
 
 Danach stehen die Kommandos `mailburg-gui` und `mailburg` im Verzeichnis `./result/bin/` zur Verfügung:
@@ -103,7 +103,7 @@ Danach stehen die Kommandos `mailburg-gui` und `mailburg` im Verzeichnis `./resu
 
 Wenn `direnv` aktiviert ist, wird die Entwicklungsumgebung, d.h. die benötigten Libaries und Umgebungsvariablen, 
 automatisch geladen, sobald man in das MailBurg-Verzeichnis wechselt. 
-Andernfalls `nix develop` oder `nix-shell` ausführen.
+Andernfalls `nix develop ./nix` oder `nix-shell ./nix` ausführen.
 
 Jetzt können die Kommandos `mailburg-gui` und `mailburg` direkt mit dem Python-Interpreter gestartet werden, z.B.:
 
@@ -119,7 +119,6 @@ Den aktuellen Pfad zum Python-Interpreter kann man mit `which python` überprüf
 Dieser sollte dann in einer Python-IDE wie z.B. PyCharm als Interpreter für das Projekt eingetragen werden, 
 damit die IDE die richtigen Libaries findet. 
 Falls verfügbar, empfiehlt es sich, ein direnv-Plugin für die IDE zu installieren.
-
 
 
 

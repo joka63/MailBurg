@@ -14,12 +14,12 @@
 # Das Paket selbst wird nicht installiert; PYTHONPATH zeigt auf das Repo.
 #
 # Gemeinsame Definitionen (pythonEnv, Wrapper, Schemas, Library-Pfade)
-# stehen in nix/devenv.nix.
+# stehen in devenv.nix.
 
 { pkgs ? import <nixpkgs> { } }:
 
 let
-  devenv = import ./nix/devenv.nix { inherit pkgs; };
+  devenv = import ./devenv.nix { inherit pkgs; };
 in
 pkgs.mkShell {
   name = "mailburg-devshell";
