@@ -1,0 +1,43 @@
+# KI Generierter Workflow zum Aktualisieren der flake.lock-Datei
+# Zum Aktivieren nach .github/workflows verschieben.
+#
+# Die flake.lock-Datei sollte regelmäßig aktualisiert werden,
+# um ggf. Sicherheitsupdates der abhängigen Paketen aus dem nixpkgs-Repo zu erhalten.
+#
+# Noch ungetestet
+name: flake.lock aktualisieren
+
+on:
+# Vorerst nur manuell, um die Änderungen zu prüfen.
+#  schedule:
+#    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-lock:
+    name: nix/flake.lock erneuern
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Lock-Datei aktualisieren
+        run: nix flake update --flake nix
+
+      - name: Pull Request erstellen
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "nix: update flake.lock"
+          title: "nix: update flake.lock"
+          body: |
+            Automatisches Update von `nix/flake.lock`.
+          branch: chore/update-nix-flake-lock
+          delete-branch: true
+          add-paths: |
+            nix/flake.lock
