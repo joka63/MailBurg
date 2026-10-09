@@ -1,14 +1,15 @@
-<!-- Vor dem Merge github:joka63/MailBurg/nix ersetzen durch github:Stefan-Lefty/MailBurg --> 
+<!-- Diesen Branch bitte nicht nach upstream mergen -->
 
 # Installation (NixOS)
 
 Diese Anleitung beschreibt die Möglichkeiten, MailBurg zu testen, zu installieren oder eine Entwicklungsumgebung einzurichten. Sie ist für NixOS-Benutzer gedacht, die Nix und Flakes verwenden. 
 Für andere Distributionen siehe [README.md](../README.md).
+Für NixOS Stable (26.05) siehe [nixos-26.05/nix/INSTALL.md](https://github.com/joka63/MailBurg/blob/nixos-26.05/nix/INSTALL-STABLE.md).
 
 
 ## Voraussetzungen
 
-- NixOS 26.05 (die aktuelle stabile NixOS-Version) oder neuer
+- NixOS Unstable oder 26.11 
 - Experimentelle Features in `/etc/nixos/configuration.nix` aktivieren
 - Direnv, um die Entwicklungsumgebung automatisch beim Wechsel in das MailBurg-Verzeichnis zu laden (optional)
 
@@ -26,19 +27,19 @@ Hierfür folgendes in `/etc/nixos/configuration.nix` eintragen:
 Folgendes Kommando startet den Download aller benötigten Pakete und dann die MailBurg-GUI, ohne sie dauerhaft zu installieren. 
 
 ```bash
-nix run github:joka63/MailBurg/nix
+nix run github:joka63/MailBurg/nixos-unstable
 ```
 
 Nach dem Beenden der GUI liegen die Pakete noch im Nix-Store (`/nix/store`), 
 können aber nicht mehr direkt aufgerufen werden. Sie bleiben im Nix-Store, 
-so dass der nächste Aufruf von `nix run github:joka63/MailBurg/nix` schneller ist.
+so dass der nächste Aufruf von `nix run github:joka63/MailBurg/nixos-unstable` schneller ist.
 Die nächste Nix-Garbage-Collection löscht die Pakete wieder aus dem Nix-Store,
 
 
 ### Paket dauerhaft ins Profil installieren
 
 ```bash
-nix profile install github:joka63/MailBurg/nix
+nix profile install github:joka63/MailBurg/nixos-unstable
 ```
 
 Danach stehen die Kommandos `mailburg` und `mailburg-gui` im Profil des aufrufenden Nutzers zur Verfügung.
@@ -53,7 +54,7 @@ In eine NixOS-Flake übernehmen (`environment.systemPackages`)
 
 ```nix
 {
-  inputs.mailburg.url = "github:joka63/MailBurg/nix";
+  inputs.mailburg.url = "github:joka63/MailBurg/nixos-unstable";
 
   outputs = { self, nixpkgs, mailburg, ... }:
   let
@@ -81,6 +82,7 @@ Im ersten Schritt das MailBurg-Repository klonen:
 ```bash
 git clone https://github.com/joka63/MailBurg.git
 cd MailBurg
+git switch nixos-unstable
 direnv allow # optional, falls direnv installiert ist
 ``` 
 
