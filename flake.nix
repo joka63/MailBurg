@@ -20,13 +20,14 @@
   description = "Entwicklungsumgebung für MailBurg (mit PySide6-Oberfläche)";
 
   inputs = {
-    # An den Kanal der Zielsysteme gebunden, nicht an unstable: Wer schon
-    # nixos-26.05 systemweit installiert hat, hat die meisten Store-Pfade
-    # (PySide6, Qt, glibc, ...) bereits im lokalen Cache. Mit unstable
-    # holte sich "nix develop" einen zweiten, meist abweichenden Satz
-    # derselben Pakete - unnötiger Download, und zwei leicht verschiedene
-    # PySide6-Fassungen im Umlauf.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    # Wir brauchen für jede unterstützte NixOS-Version einen eigenen Branch
+    # mit der entsprechenden URL. Das hat zwei Gründe:
+    # 1. Die meisten Store-Pfade (PySide6, Qt, glibc, ...) sind ereits im lokalen Cache. 
+    #    Mit einer abweichenden NixOS-Version holte sich "nix develop" einen zweiten, meist abweichenden Satz
+    #    derselben Pakete - unnötiger Download für zwei leicht verschiedene PySide6-Fassungen im Umlauf.
+    # 2. Schwerwiegender ist das Qt/KDE Plugin-System. Es lädt ggf. weitere Libraries aus dem System 
+    #    des Anwenders und verursacht möglicherweise Library-Konflikte mit denen des MailBurg-Projektes.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
