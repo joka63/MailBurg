@@ -8,9 +8,8 @@
 name: flake.lock aktualisieren
 
 on:
-# Vorerst nur manuell, um die Änderungen zu prüfen.
-#  schedule:
-#    - cron: "0 5 * * 1"
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:

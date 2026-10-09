@@ -24,6 +24,3 @@ dist/
 # Für Nix Entwicklungsumgebungen
 ## direnv/nix-direnv: lokaler Cache der Devshell, maschinenspezifisch
 .direnv/
-
-## Jeder Nutzer erzeugt seine eigene flake.lock
-flake.lock
