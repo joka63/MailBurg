@@ -4,7 +4,7 @@
 
 Diese Anleitung beschreibt die Möglichkeiten, MailBurg zu testen, zu installieren oder eine Entwicklungsumgebung einzurichten. Sie ist für NixOS-Benutzer gedacht, die Nix und Flakes verwenden. 
 Für andere Distributionen siehe [README.md](../README.md).
-Für NixOS 26.05 (Stable) siehe [nixos-26.05/nix/INSTALL.md](https://github.com/joka63/MailBurg/blob/nixos-26.05/nix/INSTALL.md).
+Für NixOS Unstable siehe [nixos-unstable/nix/INSTALL.md](https://github.com/joka63/MailBurg/blob/nixos-unstable/nix/INSTALL.md).
 
 
 ## Voraussetzungen
