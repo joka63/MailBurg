@@ -9,6 +9,63 @@ die Versionsnummern folgen [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+### Behoben
+
+- **Ein abgewählter Zeitplan war beim nächsten Öffnen wieder
+  angekreuzt.** Im Dialog »Was von selbst laufen soll« stand
+  `setChecked(stand.laeuft or stand.moeglich)` – und `moeglich` heißt
+  lediglich, dass dieses System systemd hat. Der Haken beschrieb damit
+  die Maschine statt den Wunsch des Anwenders.
+
+  Wer ihn abwählte, bekam den Timer zwar gelöscht; beim nächsten
+  Öffnen saß er wieder da. Für den, der davorsitzt, sieht das aus, als
+  sei seine Entscheidung nicht angekommen – und ein Klick auf
+  »Übernehmen« legte den Zeitplan wieder an, den er gerade loswerden
+  wollte.
+
+  **Der Sicherungsdialog machte es seit dem 30.08.2026 richtig** –
+  damals aus genau diesem Anlass behoben und hier nicht nachgezogen.
+  Zwei Stellen, eine nachgezogen, die andere nicht. Der neue Test
+  prüft deshalb **beide** nebeneinander.
+
+  Gemeldet von **joka63** im Linux-Guides-Forum, Fassung 1.8.2 auf
+  Fedora 44.
+
+## [1.8.3] – 2026-10-19
+
+### Behoben
+
+- **Das AppImage fand auf manchen Distributionen keine
+  CA-Zertifikate – und damit scheiterte jede IMAP-Verbindung.**
+  MailBurg baut TLS über `ssl.create_default_context()` und verlässt
+  sich auf die Zertifikatsablage des Systems. Im AppImage steckt aber
+  ein mitgeliefertes OpenSSL, dem die Pfade des **Bausystems**
+  einkompiliert sind. Wo die Distribution sie woanders ablegt, findet
+  es nichts.
+
+  **Das AppImage war dort nicht eingeschränkt, sondern für seinen
+  Zweck unbrauchbar** – Mailserver ohne TLS gibt es praktisch nicht
+  mehr. `certifi` bringt MailBurg nicht mit, einen Ausweg gab es also
+  auch nicht.
+
+  Der Starter sucht die Zertifikate jetzt beim Wirtssystem und setzt
+  `SSL_CERT_FILE`, wenn es nicht schon gesetzt ist – zuerst
+  `$NIX_SSL_CERT_FILE`, dann die üblichen Orte von Debian, Fedora,
+  openSUSE und Alpine. **Eine eigene Angabe bleibt unangetastet:** Wer
+  sie setzt, hat einen Grund, etwa ein Firmenzertifikat für einen
+  aufbrechenden Proxy.
+
+  Gemeldet von **joka63** im Linux-Guides-Forum, der MailBurg für
+  NixOS paketiert hat. Dort gibt es
+  `/etc/ssl/certs/ca-certificates.crt` nicht – Fedora und openSUSE
+  legen sie ebenfalls anders ab, dort dürfte dasselbe passiert sein,
+  es hat nur niemand gemeldet.
+
+  **Geprüft wird durch Ausführen, nicht durch Lesen.** Ob eine
+  Fallunterscheidung in `sh` stimmt, sieht man ihr nicht an – dieselbe
+  Lehre wie bei `install.sh` am 03.09.2026, wo der Block den Suchpfad
+  der *eigenen* Shell prüfte statt den des Anwenders.
+
 ## [1.8.2] – 2026-10-09
 
 ### Behoben
@@ -3755,6 +3812,7 @@ Erste Fassung. Der Unterbau steht; Oberfläche und IMAP fehlen noch.
 - [RECHTLICHES.md](RECHTLICHES.md) zur Rechtslage in Deutschland, Österreich und
   der Schweiz.
 
+[1.8.3]: https://github.com/Stephan-Lefty/MailBurg/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/Stephan-Lefty/MailBurg/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/Stephan-Lefty/MailBurg/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/Stephan-Lefty/MailBurg/compare/v1.7.9...v1.8.0
