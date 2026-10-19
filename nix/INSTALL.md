@@ -44,7 +44,7 @@ nix profile install github:joka63/MailBurg/nixos-26.05
 
 Danach stehen die Kommandos `mailburg` und `mailburg-gui` im Profil des aufrufenden Nutzers zur Verfügung.
 Der Starter für die GUI ist auch im Anwendungsmenü verfügbar, allerdings erst nach einem Neustart von NixOS.
-Später ist eine Aktualisierung des Pakets mit `nix profile update MailBurg` möglich, 
+Später ist eine Aktualisierung des Pakets mit `nix profile upgrade MailBurg` möglich, 
 Deinstallation mit `nix profile remove MailBurg`. 
 
 
